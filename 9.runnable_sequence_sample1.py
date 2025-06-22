@@ -33,5 +33,7 @@ formatMessage = RunnableLambda(format_message)
 sequence = RunnableSequence(first=cleanText, middle=[formatMessage], last=model)
 
 # Use the sequence
-result = sequence.invoke("  THIS is A TEST Message  ")
-print(result.content)
+for chunk in sequence.stream(
+    "  THIS is A TEST Message. THIS is A TEST Message. THIS is A TEST Message. THIS is A TEST Message. THIS is A TEST Message. THIS is A TEST Message.   "
+):
+    print(chunk.content, end="")
