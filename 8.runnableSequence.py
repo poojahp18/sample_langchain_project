@@ -30,6 +30,8 @@ parse_output = RunnableLambda(lambda x: x.content)
 
 chain = RunnableSequence(first=format_prompt, middle=[invoke_model], last=parse_output)
 
-response = chain.invoke({"topic": "Teachers", "joke_count": 2})
+# response = chain.invoke({"topic": "Teachers", "joke_count": 2})
+# print(response)
 
-print(response)
+for chunk in chain.stream({"topic": "Teachers", "joke_count": 100}):
+    print(chunk, end="")
